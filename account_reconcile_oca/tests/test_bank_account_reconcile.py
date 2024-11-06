@@ -97,7 +97,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         ) as f:
             self.assertFalse(f.can_reconcile)
             f.add_account_move_line_id = inv1.line_ids.filtered(
-                lambda l: l.account_id.account_type == "asset_receivable"
+                lambda inv_line: inv_line.account_id.account_type == "asset_receivable"
             )
             self.assertFalse(f.add_account_move_line_id)
             self.assertTrue(f.can_reconcile)
@@ -129,7 +129,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             }
         )
         receivable1 = inv1.line_ids.filtered(
-            lambda l: l.account_id.account_type == "asset_receivable"
+            lambda inv_line: inv_line.account_id.account_type == "asset_receivable"
         )
         with Form(
             bank_stmt_line,
@@ -183,7 +183,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         ) as f:
             self.assertFalse(f.can_reconcile)
             f.add_account_move_line_id = inv1.line_ids.filtered(
-                lambda l: l.account_id.account_type == "asset_receivable"
+                lambda inv_line: inv_line.account_id.account_type == "asset_receivable"
             )
             self.assertFalse(f.add_account_move_line_id)
             self.assertTrue(f.can_reconcile)
@@ -241,10 +241,10 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             }
         )
         receivable1 = inv1.line_ids.filtered(
-            lambda l: l.account_id.account_type == "asset_receivable"
+            lambda inv_line: inv_line.account_id.account_type == "asset_receivable"
         )
         receivable2 = inv2.line_ids.filtered(
-            lambda l: l.account_id.account_type == "asset_receivable"
+            lambda inv_line: inv_line.account_id.account_type == "asset_receivable"
         )
         with Form(
             bank_stmt_line,
@@ -305,10 +305,10 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             }
         )
         receivable1 = inv1.line_ids.filtered(
-            lambda l: l.account_id.account_type == "liability_payable"
+            lambda inv_line: inv_line.account_id.account_type == "liability_payable"
         )
         receivable2 = inv2.line_ids.filtered(
-            lambda l: l.account_id.account_type == "liability_payable"
+            lambda inv_line: inv_line.account_id.account_type == "liability_payable"
         )
         with Form(
             bank_stmt_line,
@@ -438,7 +438,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         inv1 = self.create_invoice(currency_id=self.currency_euro_id)
 
         receivable1 = inv1.line_ids.filtered(
-            lambda l: l.account_id.account_type == "asset_receivable"
+            lambda inv_line: inv_line.account_id.account_type == "asset_receivable"
         )
         bank_stmt = self.acc_bank_stmt_model.create(
             {
@@ -548,7 +548,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             }
         )
         receivable1 = inv1.line_ids.filtered(
-            lambda l: l.account_id.account_type == "asset_receivable"
+            lambda inv_line: inv_line.account_id.account_type == "asset_receivable"
         )
         with Form(
             bank_stmt_line,
@@ -606,7 +606,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             }
         )
         receivable1 = inv1.line_ids.filtered(
-            lambda l: l.account_id.account_type == "asset_receivable"
+            lambda inv_line: inv_line.account_id.account_type == "asset_receivable"
         )
         with Form(
             bank_stmt_line,
@@ -683,7 +683,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             }
         )
         receivable1 = inv1.line_ids.filtered(
-            lambda l: l.account_id.account_type == "asset_receivable"
+            lambda inv_line: inv_line.account_id.account_type == "asset_receivable"
         )
         with Form(
             bank_stmt_line,
@@ -721,7 +721,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             }
         )
         receivable1 = inv1.line_ids.filtered(
-            lambda l: l.account_id.account_type == "asset_receivable"
+            lambda inv_line: inv_line.account_id.account_type == "asset_receivable"
         )
         with Form(
             bank_stmt_line,
@@ -767,12 +767,12 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         ) as f:
             self.assertFalse(f.can_reconcile)
             f.add_account_move_line_id = inv1.line_ids.filtered(
-                lambda l: l.account_id.account_type == "asset_receivable"
+                lambda inv_line: inv_line.account_id.account_type == "asset_receivable"
             )
             self.assertFalse(f.add_account_move_line_id)
             self.assertTrue(f.can_reconcile)
             f.add_account_move_line_id = inv1.line_ids.filtered(
-                lambda l: l.account_id.account_type == "asset_receivable"
+                lambda inv_line: inv_line.account_id.account_type == "asset_receivable"
             )
             self.assertFalse(f.add_account_move_line_id)
             self.assertFalse(f.can_reconcile)
@@ -907,11 +907,11 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         partner = inv1.partner_id
 
         receivable1 = inv1.line_ids.filtered(
-            lambda l: l.account_id.account_type == "asset_receivable"
+            lambda inv_line: inv_line.account_id.account_type == "asset_receivable"
         )
         self.assertTrue(receivable1)
         receivable2 = inv2.line_ids.filtered(
-            lambda l: l.account_id.account_type == "asset_receivable"
+            lambda inv_line: inv_line.account_id.account_type == "asset_receivable"
         )
         self.assertTrue(receivable2)
 
@@ -1034,7 +1034,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         ) as f:
             self.assertFalse(f.can_reconcile)
             f.add_account_move_line_id = inv1.line_ids.filtered(
-                lambda l: l.account_id.account_type == "asset_receivable"
+                lambda inv_line: inv_line.account_id.account_type == "asset_receivable"
             )
             self.assertFalse(f.add_account_move_line_id)
             self.assertTrue(f.can_reconcile)
@@ -1150,7 +1150,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
                 100,
             )
             f.add_account_move_line_id = inv1.line_ids.filtered(
-                lambda l: l.account_id.account_type == "asset_receivable"
+                lambda inv_line: inv_line.account_id.account_type == "asset_receivable"
             )
             self.assertFalse(f.add_account_move_line_id)
             self.assertTrue(f.can_reconcile)

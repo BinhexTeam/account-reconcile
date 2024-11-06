@@ -18,9 +18,9 @@ class AccountBankStatement(models.Model):
                     "internal_index"
                 )
                 stmt.first_line_index = sorted_lines[:1].internal_index
-                stmt.date = sorted_lines.filtered(lambda l: l.state == "posted")[
-                    -1:
-                ].date
+                stmt.date = sorted_lines.filtered(
+                    lambda inv_line: inv_line.state == "posted"
+                )[-1:].date
         return super(AccountBankStatement, _self)._compute_date_index()
 
     def action_open_statement_lines(self):

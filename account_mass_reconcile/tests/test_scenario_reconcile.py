@@ -120,8 +120,12 @@ class TestScenarioReconcile(TestAccountReconciliationCommon):
         mass_rec.run_reconcile()
         self.assertEqual("paid", invoice.payment_state)
         self.assertTrue(mass_rec.last_history)
-        payment_new_line = payment_new.move_id.line_ids.filtered(lambda l: l.credit)
-        payment_old_line = payment_old.move_id.line_ids.filtered(lambda l: l.credit)
+        payment_new_line = payment_new.move_id.line_ids.filtered(
+            lambda move_line: move_line.credit
+        )
+        payment_old_line = payment_old.move_id.line_ids.filtered(
+            lambda move_line: move_line.credit
+        )
         self.assertTrue(payment_new_line in mass_rec.last_history.reconcile_line_ids)
         self.assertTrue(payment_new_line.reconciled)
         self.assertFalse(payment_old_line in mass_rec.last_history.reconcile_line_ids)
@@ -179,8 +183,12 @@ class TestScenarioReconcile(TestAccountReconciliationCommon):
         mass_rec.run_reconcile()
         self.assertEqual("paid", invoice.payment_state)
         self.assertTrue(mass_rec.last_history)
-        payment_new_line = payment_new.move_id.line_ids.filtered(lambda l: l.credit)
-        payment_old_line = payment_old.move_id.line_ids.filtered(lambda l: l.credit)
+        payment_new_line = payment_new.move_id.line_ids.filtered(
+            lambda move_line: move_line.credit
+        )
+        payment_old_line = payment_old.move_id.line_ids.filtered(
+            lambda move_line: move_line.credit
+        )
         self.assertFalse(payment_new_line in mass_rec.last_history.reconcile_line_ids)
         self.assertFalse(payment_new_line.reconciled)
         self.assertTrue(payment_old_line in mass_rec.last_history.reconcile_line_ids)
@@ -271,11 +279,11 @@ class TestScenarioReconcile(TestAccountReconciliationCommon):
         )
         payment.action_post()
         line_payment = payment.line_ids.filtered(
-            lambda l: l.account_id.id == receivable_account_id
+            lambda move_line: move_line.account_id.id == receivable_account_id
         )
         self.assertEqual(line_payment.reconciled, False)
         invoice1_line = invoice1.line_ids.filtered(
-            lambda l: l.account_id.id == receivable_account_id
+            lambda inv_line: inv_line.account_id.id == receivable_account_id
         )
         self.assertEqual(invoice1_line.reconciled, False)
 
@@ -298,7 +306,7 @@ class TestScenarioReconcile(TestAccountReconciliationCommon):
         invoice2 = self._create_invoice(invoice_amount=500, auto_validate=True)
         invoice2.ref = "test ref"
         invoice2_line = invoice2.line_ids.filtered(
-            lambda l: l.account_id.id == receivable_account_id
+            lambda inv_line: inv_line.account_id.id == receivable_account_id
         )
         mass_rec.run_reconcile()
         self.assertEqual(line_payment.reconciled, True)
@@ -355,7 +363,7 @@ class TestScenarioReconcile(TestAccountReconciliationCommon):
         self.assertEqual("paid", invoice.payment_state)
         full_reconcile = invoice.line_ids.mapped("full_reconcile_id")
         writeoff_line = full_reconcile.reconciled_line_ids.filtered(
-            lambda l: l.debit == 0.1
+            lambda inv_line: inv_line.debit == 0.1
         )
         self.assertEqual(len(writeoff_line), 1)
         self.assertEqual(
@@ -417,7 +425,7 @@ class TestScenarioReconcile(TestAccountReconciliationCommon):
         self.assertEqual("paid", invoice.payment_state)
         full_reconcile = invoice.line_ids.mapped("full_reconcile_id")
         writeoff_line = full_reconcile.reconciled_line_ids.filtered(
-            lambda l: l.debit == 0.02
+            lambda inv_line: inv_line.debit == 0.02
         )
         self.assertEqual(len(writeoff_line), 1)
         self.assertEqual(writeoff_line.date, fields.Date.today())
